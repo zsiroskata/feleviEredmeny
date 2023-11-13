@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace feleviEredmeny
@@ -8,34 +9,36 @@ namespace feleviEredmeny
     {
         public string Diak { get; set; }
         public double Oktazonosito { get; set; }
-        List<int> Lista { get; set; }
+        public List<int> jegyek { get; set; }
 
 
         public Tanulo(string adatok)
         {
             string[] adat = adatok.Split("\t");
+            
             Diak = adat[0];
             Oktazonosito = Convert.ToDouble(adat[1]);
 
-            Lista = new List<int>();
+
+            jegyek = new List<int>();
             for (int i = 2; i < adat.Length; i++)
             {
-                Lista.Add(Convert.ToInt32(adat[i]));
+                jegyek.Add(Convert.ToInt32(adat[i]));
             }
         }
-
+        public double atlag => jegyek.Average();
         public override string ToString()
         {
             return $"Diák neve {Diak}, azonosítója: {Oktazonosito}";
         }
         
-        public double atlag(double atlag)
+        public double egyatlag(double atlag)
         {
-            foreach (var tanulo in Lista)
+            foreach (var tanulo in jegyek)
             {
                 atlag += tanulo;
             }
-            return atlag / Lista.Count;
+            return atlag / jegyek.Count;
         }
 
     }
